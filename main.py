@@ -4,19 +4,28 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import psycopg2
 
-
+# Основа приложения
 app = FastAPI()
 
+# Модель
+class Message(BaseModel):
+    description: str
+    
 
 class Item(BaseModel):
     name: str
     price: float
     is_offer: Union[bool, None] = None
 
-
-@app.get("/")
+# Домашняя функция
+@app.get("/home")
 def read_root():
-    return {"Hello": "World"}
+    return {"data": "Hello World"}
+
+# Функция переписки
+@app.post("/message")
+async def message():
+    return {"Ok": True}
 
 
 @app.get("/items/{item_id}")
